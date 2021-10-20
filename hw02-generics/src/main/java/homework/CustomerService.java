@@ -1,9 +1,7 @@
 package homework;
 
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CustomerService {
 
@@ -13,18 +11,22 @@ public class CustomerService {
 
     public Map.Entry<Customer, String> getSmallest() {
         //Возможно, чтобы реализовать этот метод, потребуется посмотреть как Map.Entry сделан в jdk
-        return customers.entrySet()
+        Optional<Map.Entry<Customer, String>> entry = customers.entrySet()
                 .stream()
-                .min(Comparator.comparing(o -> o.getKey().getScores()))
-                .orElse(null);  // это "заглушка, чтобы скомилировать"
+                .min(Comparator.comparing(o -> o.getKey().getScores()));
+        return getCustomerStringSimpleEntry(entry);
     }
 
     public Map.Entry<Customer, String> getNext(Customer customer) {
-        return customers.entrySet()
+        Optional<Map.Entry<Customer, String>> entry = customers.entrySet()
                 .stream()
                 .filter(x -> x.getKey().getScores() > customer.getScores())
-                .min(Comparator.comparing(o -> o.getKey().getScores()))
-                .orElse(null); // это "заглушка, чтобы скомилировать"
+                .min(Comparator.comparing(o -> o.getKey().getScores()));
+        return getCustomerStringSimpleEntry(entry);
+    }
+
+    private AbstractMap.SimpleEntry<Customer, String> getCustomerStringSimpleEntry(Optional<Map.Entry<Customer, String>> entry) {
+        return entry.isPresent() ? new AbstractMap.SimpleEntry<>(new Customer(entry.get().getKey().getId(), entry.get().getKey().getName(), entry.get().getKey().getScores()), entry.get().getValue()) : null;
     }
 
     public void add(Customer customer, String data) {

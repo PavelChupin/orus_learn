@@ -14,6 +14,21 @@ class CustomerTest {
     // Все тесты должны проходить, менять тесты не надо.
 
     @Test
+    //@DisplayName("Проверяем, что класс Customer не сломан")
+    void setterCustomerTest() {
+        //given
+        String expectedName = "updatedName";
+        String name = "nameVas";
+        Customer customer = new Customer(1, name, 2);
+
+        //when
+        customer.setName(expectedName);
+
+        //then
+        assertThat(customer.getName()).isEqualTo(expectedName);
+    }
+
+    @Test
     //@Disabled //надо удалить
     @DisplayName("Объект Customer как ключ в карте")
     void customerAsKeyTest() {
@@ -92,8 +107,7 @@ class CustomerTest {
 
         CustomerService customerService = new CustomerService();
         customerService.add(customer1, "Data1");
-        Customer customer4 = new Customer(customer2.getId(), customer2.getName(), customer2.getScores());
-        customerService.add(customer4, "Data2");
+        customerService.add(new Customer(customer2.getId(), customer2.getName(), customer2.getScores()), "Data2");
         customerService.add(customer3, "Data3");
 
         //when

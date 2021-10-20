@@ -24,7 +24,7 @@ public class Customer {
     }
 
     public void setName(String name) {
-        /*this.name = name;*/ //Убираем переопределение, что бы поле не изменяемое было
+        this.name = name; //Убираем переопределение, что бы поле не изменяемое было
     }
 
     public long getScores() {
@@ -32,7 +32,7 @@ public class Customer {
     }
 
     public void setScores(long scores) {
-        /*this.scores = scores; */
+        this.scores = scores;
         //Убираем переопределение, что бы поле не изменяемое было
     }
 
