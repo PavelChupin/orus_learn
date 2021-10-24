@@ -14,6 +14,6 @@ public class CustomerReverseOrder {
     }
 
     public Customer take() {
-        return this.customerList.pollLast(); // это "заглушка, чтобы скомилировать"
+        return this.customerList.pollLast();
     }
 }
