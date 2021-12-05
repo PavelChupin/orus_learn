@@ -10,21 +10,21 @@ import java.util.List;
 import java.util.Optional;
 
 public class MyJunit {
-    private Integer testSuccess = 0;
-    private Integer testErr = 0;
+    private int testSuccess = 0;
+    private int testErr = 0;
 
     public void start(Class<?> testClass) {
         System.out.println("Test className: " + testClass.getSimpleName());
         List<Method> methods = Arrays.asList(testClass.getDeclaredMethods());
 
         // Запускаем метод beforeAll
-        startMethodAll(testClass, BeforeAll.class, methods);
+        startMethodAll(BeforeAll.class, methods);
 
         // Запускаем основной набор тестов
         startTests(testClass, methods);
 
         // Запускаем метод afterAll
-        startMethodAll(testClass, AfterAll.class, methods);
+        startMethodAll(AfterAll.class, methods);
 
         //Статистика выполненных тестов для класса
         System.out.println(testClass.getSimpleName() + "\n TestSuccess: " + testSuccess + "\n TestErr: " + testErr);
@@ -35,7 +35,7 @@ public class MyJunit {
         Optional<Method> afterMethodEach = getMethodEach(methods, AfterEach.class);
 
         methods.stream()
-                .filter(method -> method.getDeclaredAnnotation(Test.class) != null && !Modifier.isStatic(method.getModifiers()))
+                .filter(method -> method.isAnnotationPresent(Test.class) && !Modifier.isStatic(method.getModifiers()))
                 .forEach(testMethod -> {
                     Object obj = null;
                     try {
@@ -43,7 +43,7 @@ public class MyJunit {
                     } catch (ReflectiveOperationException e) {
                         throw new RuntimeException(e);
                     }
-                    List<Method> mt = new ArrayList();
+                    List<Method> mt = new ArrayList<>();
                     beforeMethodEach.ifPresent(mt::add);
                     mt.add(testMethod);
                     afterMethodEach.ifPresent(mt::add);
@@ -76,18 +76,18 @@ public class MyJunit {
 
     private Optional<Method> getMethodEach(List<Method> methods, Class annotation) {
         return methods.stream()
-                .filter(method -> method.getDeclaredAnnotation(annotation) != null && !Modifier.isStatic(method.getModifiers()))
+                .filter(method -> method.isAnnotationPresent(annotation) && !Modifier.isStatic(method.getModifiers()))
                 .findFirst();
     }
 
-    private void startMethodAll(Class<?> testClass, Class annotation, List<Method> methods) {
+    private void startMethodAll(Class annotation, List<Method> methods) {
         Optional<Method> methodAll = methods.stream()
-                .filter(method -> method.getDeclaredAnnotation(annotation) != null && Modifier.isStatic(method.getModifiers()))
+                .filter(method -> method.isAnnotationPresent(annotation) && Modifier.isStatic(method.getModifiers()))
                 .findFirst();
 
         if (methodAll.isPresent()) {
             try {
-                methodAll.get().invoke(testClass.getConstructor().newInstance());
+                methodAll.get().invoke(null);
             } catch (ReflectiveOperationException e) {
                 throw new RuntimeException(e);
             }
