@@ -1,5 +1,6 @@
 import bankomat.Banknote;
 import bankomat.Bankomat;
+import bankomat.BankomatATM;
 import bankomat.Nominal;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Bankomat bk = new Bankomat();
+        Bankomat bk = new BankomatATM();
 
         try {
             List<Banknote> bt = new ArrayList<>();
@@ -19,13 +20,13 @@ public class Main {
 
             System.out.println(bk.getRest());
 
-            List<Banknote> out = bk.cashOut(910l);
+            List<Banknote> out = bk.cashOut(810l);
             System.out.println(out);
             System.out.println(bk.getRest());
             System.out.println(bk);
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
+            System.out.println(bk.getRest());
         }
     }
 }
