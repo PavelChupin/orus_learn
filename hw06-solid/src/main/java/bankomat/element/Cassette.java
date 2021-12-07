@@ -28,8 +28,7 @@ public class Cassette {
     }
 
     public List<Banknote> pollAllBanknotes() {
-        final List<Banknote> banknotes = new ArrayList<>();
-        banknotes.addAll(cassetteBanknotes);
+        final List<Banknote> banknotes = new ArrayList<>(cassetteBanknotes);
         cassetteBanknotes.clear();
         return banknotes;
     }

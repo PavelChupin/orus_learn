@@ -17,8 +17,8 @@ public class Bankomat implements ATM {
     }
 
     public long getRest() {
-        return this.cassettes.entrySet().stream()
-                .mapToLong(entr -> entr.getValue().getSumAmountInCassette())
+        return this.cassettes.values().stream()
+                .mapToLong(Cassette::getSumAmountInCassette)
                 .sum();
     }
 
@@ -70,7 +70,7 @@ public class Bankomat implements ATM {
                 cashTemp -= (long) bt.size() * nominalKey.getNominal();
             }
 
-            if (cashTemp == 0){
+            if (cashTemp == 0) {
                 break;
             }
         }

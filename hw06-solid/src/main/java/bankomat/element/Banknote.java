@@ -17,8 +17,4 @@ public class Banknote {
                 "nominal=" + nominal.getNominal() +
                 '}';
     }
-
-    public int getAmountOfNominal(){
-        return nominal.getNominal();
-    }
 }

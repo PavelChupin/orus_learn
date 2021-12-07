@@ -18,12 +18,15 @@ public class Main {
             bt.add(new Banknote(Nominal.TWO_HUNDRED));
             bk.cashIn(bt);
 
+            System.out.println(bk);
             System.out.println(bk.getRest());
 
             List<Banknote> out = bk.cashOut(710l);
+
             System.out.println(out);
-            System.out.println(bk.getRest());
+
             System.out.println(bk);
+            System.out.println(bk.getRest());
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             System.out.println(bk.getRest());
