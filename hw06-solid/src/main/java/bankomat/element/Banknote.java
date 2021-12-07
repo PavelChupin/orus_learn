@@ -1,4 +1,4 @@
-package bankomat;
+package bankomat.element;
 
 public class Banknote {
     private final Nominal nominal;
@@ -16,5 +16,9 @@ public class Banknote {
         return "Banknote{" +
                 "nominal=" + nominal.getNominal() +
                 '}';
+    }
+
+    public int getAmountOfNominal(){
+        return nominal.getNominal();
     }
 }

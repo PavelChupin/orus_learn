@@ -1,4 +1,4 @@
-package bankomat;
+package bankomat.element;
 
 public enum Nominal {
     TEN(10),
