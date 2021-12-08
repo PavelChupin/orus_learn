@@ -30,7 +30,9 @@ public class Bankomat implements ATM {
     }
 
     private void addBanknoteToBankomat(Nominal nominal, List<Banknote> banknotes) {
-        if (Nominal.valueOf(nominal.toString()) == null) {
+        if (Arrays.stream(Nominal.values())
+                .anyMatch(n -> n != nominal)
+        ) {
             throw new BankomatExeption(String.format("Nominal %d of banknote not support.", nominal.getNominal()));
         }
         cassettes.get(nominal).addBanknotes(banknotes);
@@ -43,7 +45,7 @@ public class Bankomat implements ATM {
                 || cash % Arrays.stream(Nominal.values())
                 .mapToInt(Nominal::getNominal)
                 .min()
-                .getAsInt() != 0) {
+                .orElse(0) != 0) {
             throw new BankomatExeption(String.format("The requested amount %d could not be dispensed.", cash));
         } else if (cash == rest) {
             return allAmountOut();

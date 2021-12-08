@@ -21,7 +21,7 @@ public class Cassette {
 
     public List<Banknote> pollBanknotes(int count) {
         final List<Banknote> banknotes = new ArrayList<>();
-        for (int i = cassetteBanknotes.size() < count ? cassetteBanknotes.size() : count; i > 0; i--) {
+        for (int i = Math.min(cassetteBanknotes.size(), count); i > 0; i--) {
             banknotes.add(cassetteBanknotes.pollLast());
         }
         return banknotes;
